@@ -1,0 +1,17 @@
+@model RehberApp.Models.Birim
+
+@{
+    ViewData["Title"] = "Yeni Birim";
+}
+
+<h1>Yeni Birim</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Ad" class="form-label">Birim Adı</label>
+        <input asp-for="Ad" class="form-control" />
+        <span asp-validation-for="Ad" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">Geri</a>
+</form>

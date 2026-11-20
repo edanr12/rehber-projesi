@@ -1,0 +1,45 @@
+@model IEnumerable<RehberApp.Models.Kisi>
+
+@{
+    ViewData["Title"] = "Rehber";
+}
+
+<h1>Rehber</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Yeni Kişi Ekle</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>E-posta</th>
+            <th>Telefon</th>
+            <th>Ünvan</th>
+            <th>Birim</th>
+            <th style="width: 200px;">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Ad</td>
+                <td>@item.Soyad</td>
+                <td>@item.Eposta</td>
+                <td>@item.Telefon</td>
+                <td>@item.Unvan</td>
+                <td>@(item.Birim?.Ad ?? "-")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline"
+                          onsubmit="return confirm('Bu kişiyi silmek istediğinize emin misiniz?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

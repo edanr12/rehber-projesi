@@ -1,0 +1,43 @@
+@model RehberApp.Models.Kisi
+
+@{
+    ViewData["Title"] = "Yeni Kişi";
+}
+
+<h1>Yeni Kişi</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Ad" class="form-label">Ad</label>
+        <input asp-for="Ad" class="form-control" />
+        <span asp-validation-for="Ad" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Soyad" class="form-label">Soyad</label>
+        <input asp-for="Soyad" class="form-control" />
+        <span asp-validation-for="Soyad" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Eposta" class="form-label">E-posta</label>
+        <input asp-for="Eposta" type="email" class="form-control" />
+        <span asp-validation-for="Eposta" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Telefon" class="form-label">Telefon</label>
+        <input asp-for="Telefon" class="form-control" />
+        <span asp-validation-for="Telefon" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Unvan" class="form-label">Ünvan</label>
+        <input asp-for="Unvan" class="form-control" />
+        <span asp-validation-for="Unvan" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="BirimId" class="form-label">Birim</label>
+        <select asp-for="BirimId" asp-items="ViewBag.BirimId" class="form-select">
+            <option value="">-- Birim seçin --</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">Geri</a>
+</form>
