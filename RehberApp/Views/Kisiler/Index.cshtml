@@ -6,9 +6,24 @@
 
 <h1>Rehber</h1>
 
-<p>
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
     <a asp-action="Create" class="btn btn-primary">Yeni Kişi Ekle</a>
-</p>
+
+    <form asp-action="Index" method="get" class="d-flex flex-wrap gap-2">
+        <input type="text" name="arama" value="@ViewBag.Arama"
+               class="form-control" style="width: 240px;"
+               placeholder="Ad, soyad, e-posta, telefon..." />
+
+        <select name="birimId" asp-items="ViewBag.BirimId" class="form-select" style="width: 180px;">
+            <option value="">Tüm birimler</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Ara</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Temizle</a>
+    </form>
+</div>
+
+<p class="text-muted">@Model.Count() kayıt listeleniyor.</p>
 
 <table class="table table-striped table-hover align-middle shadow-sm">
     <thead class="table-primary">

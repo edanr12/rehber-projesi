@@ -23,14 +23,39 @@ public class KisilerController : Controller
     }
 
     // Liste
-    public async Task<IActionResult> Index()
+  // Liste, arama ve filtre
+public async Task<IActionResult> Index(string? arama, int? birimId)
+{
+    var sorgu = _context.Kisiler
+        .Include(k => k.Birim)
+        .AsQueryable();
+
+    if (!string.IsNullOrWhiteSpace(arama))
     {
-        var kisiler = await _context.Kisiler
-            .Include(k => k.Birim)
-            .OrderBy(k => k.Ad).ThenBy(k => k.Soyad)
-            .ToListAsync();
-        return View(kisiler);
+        var kelime = arama.Trim().ToLower();
+        sorgu = sorgu.Where(k =>
+            k.Ad.ToLower().Contains(kelime) ||
+            k.Soyad.ToLower().Contains(kelime) ||
+            k.Eposta.ToLower().Contains(kelime) ||
+            k.Telefon.Contains(kelime) ||
+            k.Unvan.ToLower().Contains(kelime) ||
+            (k.Birim != null && k.Birim.Ad.ToLower().Contains(kelime)));
     }
+
+    if (birimId.HasValue)
+    {
+        sorgu = sorgu.Where(k => k.BirimId == birimId.Value);
+    }
+
+    await BirimleriYukle(birimId);
+    ViewBag.Arama = arama;
+
+    var kisiler = await sorgu
+        .OrderBy(k => k.Ad).ThenBy(k => k.Soyad)
+        .ToListAsync();
+
+    return View(kisiler);
+}
 
     // Ekleme formu
     public async Task<IActionResult> Create()
