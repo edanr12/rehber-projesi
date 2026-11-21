@@ -32,12 +32,16 @@
         <input asp-for="Unvan" class="form-control" />
         <span asp-validation-for="Unvan" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label asp-for="BirimId" class="form-label">Birim</label>
-        <select asp-for="BirimId" asp-items="ViewBag.BirimId" class="form-select">
-            <option value="">-- Birim seçin --</option>
-        </select>
-    </div>
+   <div class="mb-3">
+    <label asp-for="BirimId" class="form-label">Birim</label>
+    <select asp-for="BirimId" asp-items="ViewBag.BirimId" class="form-select">
+        <option value="">-- Birim seçin --</option>
+    </select>
+    <span asp-validation-for="BirimId" class="text-danger"></span>
+</div>
     <button type="submit" class="btn btn-primary">Kaydet</button>
     <a asp-action="Index" class="btn btn-secondary">Geri</a>
 </form>
+     @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

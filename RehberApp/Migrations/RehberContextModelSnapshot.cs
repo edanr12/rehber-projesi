@@ -24,6 +24,7 @@ namespace RehberApp.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -39,9 +40,10 @@ namespace RehberApp.Migrations
 
                     b.Property<string>("Ad")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("BirimId")
+                    b.Property<int>("BirimId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Eposta")
@@ -50,6 +52,7 @@ namespace RehberApp.Migrations
 
                     b.Property<string>("Soyad")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefon")
@@ -71,7 +74,9 @@ namespace RehberApp.Migrations
                 {
                     b.HasOne("RehberApp.Models.Birim", "Birim")
                         .WithMany("Kisiler")
-                        .HasForeignKey("BirimId");
+                        .HasForeignKey("BirimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Birim");
                 });
