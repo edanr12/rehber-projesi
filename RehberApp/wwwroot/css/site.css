@@ -1,3 +1,28 @@
+:root {
+    --bs-primary: #353435;
+    --bs-primary-rgb: 53, 52, 53;
+    --bs-link-color: #353435;
+    --bs-link-hover-color: #115e59;
+}
+
+.navbar.bg-primary {
+    background-color: #353435 !important;
+}
+
+.btn-primary {
+    --bs-btn-bg: #353435;
+    --bs-btn-border-color: #353435;
+    --bs-btn-hover-bg: #115e59;
+    --bs-btn-hover-border-color: #115e59;
+    --bs-btn-active-bg: #134e4a;
+    --bs-btn-active-border-color: #134e4a;
+}
+
+.table-primary {
+    --bs-table-bg: #e5e7eb;
+    --bs-table-border-color: #99f6e4;
+}
+
 html {
   font-size: 14px;
 }
