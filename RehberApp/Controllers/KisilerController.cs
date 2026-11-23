@@ -56,7 +56,56 @@ public async Task<IActionResult> Index(string? arama, int? birimId)
 
     return View(kisiler);
 }
+// CSV indirme
+public async Task<IActionResult> CsvIndir(string? arama, int? birimId)
+{
+    var sorgu = _context.Kisiler
+        .Include(k => k.Birim)
+        .AsQueryable();
 
+    if (!string.IsNullOrWhiteSpace(arama))
+    {
+        var kelime = arama.Trim().ToLower();
+        sorgu = sorgu.Where(k =>
+            k.Ad.ToLower().Contains(kelime) ||
+            k.Soyad.ToLower().Contains(kelime) ||
+            k.Eposta.ToLower().Contains(kelime) ||
+            k.Telefon.Contains(kelime) ||
+            k.Unvan.ToLower().Contains(kelime) ||
+            (k.Birim != null && k.Birim.Ad.ToLower().Contains(kelime)));
+    }
+
+    if (birimId.HasValue)
+    {
+        sorgu = sorgu.Where(k => k.BirimId == birimId.Value);
+    }
+
+    var kisiler = await sorgu
+        .OrderBy(k => k.Ad).ThenBy(k => k.Soyad)
+        .ToListAsync();
+
+    static string Temizle(string? deger)
+    {
+        var d = (deger ?? "").Replace("\"", "\"\"");
+        return $"\"{d}\"";
+    }
+
+    var sb = new System.Text.StringBuilder();
+    sb.AppendLine("Ad;Soyad;E-posta;Telefon;Unvan;Birim");
+    foreach (var k in kisiler)
+    {
+        sb.AppendLine(string.Join(";",
+            Temizle(k.Ad), Temizle(k.Soyad), Temizle(k.Eposta),
+            Temizle("=\"" + k.Telefon + "\""), Temizle(k.Unvan), Temizle(k.Birim?.Ad)));
+    }
+
+    // Başa BOM ekliyoruz ki Excel Türkçe karakterleri doğru göstersin
+    var bytes = new System.Text.UTF8Encoding(true).GetPreamble()
+        .Concat(System.Text.Encoding.UTF8.GetBytes(sb.ToString()))
+        .ToArray();
+
+    return File(bytes, "text/csv", "rehber.csv");
+}
     // Ekleme formu
     public async Task<IActionResult> Create()
     {
