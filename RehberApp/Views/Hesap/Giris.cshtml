@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Giriş";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-sm mt-5">
+            <div class="card-body p-4">
+                <h2 class="h4 mb-4 text-center">Giriş Yap</h2>
+
+                @if (ViewBag.Hata != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Hata</div>
+                }
+
+                <form asp-action="Giris" method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="kullaniciAdi">Kullanıcı Adı</label>
+                        <input class="form-control" id="kullaniciAdi" name="kullaniciAdi" autofocus />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="sifre">Şifre</label>
+                        <input class="form-control" id="sifre" name="sifre" type="password" />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Giriş</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

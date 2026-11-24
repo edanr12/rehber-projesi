@@ -11,4 +11,5 @@ public class RehberContext : DbContext
 
     public DbSet<Kisi> Kisiler { get; set; }
     public DbSet<Birim> Birimler { get; set; }
+    public DbSet<Kullanici> Kullanicilar { get; set; }
 }

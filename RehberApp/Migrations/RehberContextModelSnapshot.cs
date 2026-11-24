@@ -70,6 +70,30 @@ namespace RehberApp.Migrations
                     b.ToTable("Kisiler");
                 });
 
+            modelBuilder.Entity("RehberApp.Models.Kullanici", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SifreHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Kullanicilar");
+                });
+
             modelBuilder.Entity("RehberApp.Models.Kisi", b =>
                 {
                     b.HasOne("RehberApp.Models.Birim", "Birim")
